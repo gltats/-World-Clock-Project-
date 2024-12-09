@@ -1,0 +1,1 @@
+alert("Hi there! Welcome to my World Clock Project!");
