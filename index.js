@@ -107,8 +107,20 @@ function updateCity(event) {
             <button onclick="refreshPage()" class="mt-4 mb-1">Refresh</button>
 
         `;
-		let container = document.querySelector(".container");
-		container.style.backgroundImage = "none";
+		fetch(`https://api.unsplash.com/photos/random?query=${cityName}&client_id=${UNSPLASH_ACCESS_KEY}`)
+		.then(response => response.json())
+		.then(photoData => {
+			//let cityImage = document.createElement("img");
+			//cityImage.src = photoData.urls.regular;
+			//cityImage.alt = `${city}`;
+			//set the image to the background of the container
+			let container = document.querySelector(".container");
+			container.style.backgroundImage = `url(${photoData.urls.regular})`;
+			container.style.backgroundSize = "cover";
+			container.style.backgroundPosition = "center";
+			container.style.backgroundRepeat = "no-repeat";
+		})
+		.catch(error => console.error('Error fetching city image:', error));
         updateCityInterval = setInterval(() => {
             let cityTime = moment().tz(cityTimeZone);
             let dateElement = citiesElement.querySelector(".date");
@@ -139,7 +151,7 @@ function changeBackroundColor() {
 	}
 	else {
 		document.body.style.background = "linear-gradient(45deg, #f1bcff, #a9eee9, #ecffa4, #ffdca6, #f2aeae)";
-		document.body.style.color = "black";
+		document.body.style.color = "rgb(67, 202, 255)";
 		document.body.style.backgroundSize = "400% 400%";
 	}
 }

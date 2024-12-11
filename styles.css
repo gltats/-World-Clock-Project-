@@ -7,6 +7,7 @@ body
 	text-align: center;
 	margin-top: 5%;
 	font-family: "Playwrite DE Grund", serif;
+	color: rgb(67, 202, 255)
 }
 
 @keyframes gradient
@@ -31,6 +32,7 @@ h1
 	text-align: center;
 	font-size: 50px;
 	margin-top: 1rem;
+	text-shadow: 2px 2px 2px #c539a7;
 }
 
 .container
@@ -95,4 +97,13 @@ a {
 
 a:hover {
 	color: rgb(163, 26, 152);
+}
+
+.city
+{
+	/*background-color:rgba(245, 245, 245, 0.577);*/
+	background-color: rgba(71, 85, 103, 0.793);
+	border-radius: 5px;
+	padding: 10px;
+	margin: 3px auto;
 }
