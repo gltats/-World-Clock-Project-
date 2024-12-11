@@ -54,6 +54,12 @@ select
 	color: white;
 }
 
+select:hover
+{
+	background-color: #a31f7d;
+}
+
+
 button
 {
 	background-color: #c539a7;
@@ -67,6 +73,11 @@ button
 	cursor: pointer;
 }
 
+button:hover
+{
+	background-color: #a31f7d;
+}
+
 .date
 {
 	font-size: 14px;
@@ -76,4 +87,13 @@ button
 {
 	font-size: 20px;
 	font-weight: bold;
+}
+
+a {
+	text-decoration: underline;
+	color: rgb(255, 0, 234);
+}
+
+a:hover {
+	color: rgb(163, 26, 152);
 }
