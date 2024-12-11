@@ -83,8 +83,6 @@ function updateCity(event) {
 								container.style.backgroundSize = "cover";
 								container.style.backgroundPosition = "center";
 								container.style.backgroundRepeat = "no-repeat";
-								container.style.opacity = "0.9";
-
 							})
 						.catch(error => console.error('Error fetching city image:', error));
                     })
