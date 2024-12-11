@@ -1,12 +1,9 @@
-//Using moment to get the current time and date
-//let getTimezone = moment.tz.guess();
 const UNSPLASH_ACCESS_KEY =  'hxZKIo_wnzrFpB8vKAiKFC-2LoMB2cZBv9PWpGrpDiA';
 document.getElementById("city").selectedIndex = 0;
 let container = document.querySelector(".container");
 container.style.backgroundImage = "none";
 
 function updateTime() {
-    // Los Angeles
     let losAngelesElement = document.querySelector("#los-angeles");
     if (losAngelesElement) {
         let losAngelesDateElement = losAngelesElement.querySelector(".date");
@@ -17,7 +14,6 @@ function updateTime() {
         losAngelesTimeElement.innerHTML = losAngelesTime.format("h:mm:ss [<small>]A[</small>]");
     }
 
-    // Paris
     let parisElement = document.querySelector("#paris");
     if (parisElement) {
         let parisDateElement = parisElement.querySelector(".date");
@@ -29,11 +25,11 @@ function updateTime() {
     }
 }
 
-let updateCityInterval; // Variable to store the interval ID
+let updateCityInterval;
 
 function updateCity(event) {
     let cityTimeZone = event.target.value;
-    clearInterval(updateCityInterval); // Clear the previous interval
+    clearInterval(updateCityInterval); 
 	if (cityTimeZone === "") {
 		console.log("Please select a city");
 		refreshPage();
@@ -44,7 +40,6 @@ function updateCity(event) {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
 
-                // Use a reverse geocoding service to get the city name
                 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
                     .then(response => response.json())
                     .then(data => {
@@ -76,10 +71,6 @@ function updateCity(event) {
                         fetch(`https://api.unsplash.com/photos/random?query=${city}&client_id=${UNSPLASH_ACCESS_KEY}`)
                             .then(response => response.json())
                             .then(photoData => {
-                                //let cityImage = document.createElement("img");
-                                //cityImage.src = photoData.urls.regular;
-                                //cityImage.alt = `${city}`;
-								//set the image to the background of the container
 								let container = document.querySelector(".container");
 								container.style.backgroundImage = `url(${photoData.urls.regular})`;
 								container.style.backgroundSize = "cover";
@@ -148,12 +139,10 @@ function handleGeolocationError(error) {
 
 function refreshPage() {
     location.reload();
-	//set the selector to the first option
 	document.getElementById("city").selectedIndex = 0;
 }
 
 function changeBackroundColor() {
-	//if current location is after 18:00 background color will be dark otherwise background: linear-gradient(45deg, #f1bcff, #a9eee9, #ecffa4, #ffdca6, #f2aeae);
 	let currentTime = moment().tz(moment.tz.guess());
 	let hours = currentTime.hours();
 
