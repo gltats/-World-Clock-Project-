@@ -1,5 +1,7 @@
 //Using moment to get the current time and date
 //let getTimezone = moment.tz.guess();
+document.getElementById("city").selectedIndex = 0;
+
 function updateTime() {
     // Los Angeles
     let losAngelesElement = document.querySelector("#los-angeles");
@@ -24,9 +26,15 @@ function updateTime() {
     }
 }
 
+let updateCityInterval; // Variable to store the interval ID
+
 function updateCity(event) {
     let cityTimeZone = event.target.value;
-    if (cityTimeZone === "current") {
+    clearInterval(updateCityInterval); // Clear the previous interval
+	if (cityTimeZone === "") {
+		console.log("Please select a city");
+	}
+    else if (cityTimeZone === "current") {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 let lat = position.coords.latitude;
@@ -38,53 +46,60 @@ function updateCity(event) {
                     .then(data => {
                         let city = data.address.city || data.address.town || data.address.village || "Location";
                         cityTimeZone = moment.tz.guess();
-                        let cityTime = moment().tz(cityTimeZone);
                         let citiesElement = document.querySelector("#cities");
                         citiesElement.innerHTML = `
-                            <div class="city">
-                                <div>
+                            <div class="city row justify-content-evenly">
+                                <div class="col-4">
                                     <h2>${city}</h2>
-                                    <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+                                    <div class="date"></div>
                                 </div>
-                                <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small></div>
+                                <div class="time col-4"> </div>
+							<button onclick="refreshPage()">Refresh</button>
                             </div>
                         `;
+                        updateCityInterval = setInterval(() => {
+                            let cityTime = moment().tz(cityTimeZone);
+                            let dateElement = citiesElement.querySelector(".date");
+                            let timeElement = citiesElement.querySelector(".time");
+
+                            dateElement.innerHTML = cityTime.format("MMMM Do YYYY");
+                            timeElement.innerHTML = cityTime.format("h:mm:ss A");
+                        }, 1000);
                     })
                     .catch(error => console.error('Error fetching city name:', error));
             }, (error) => {
                 console.error('Error getting location:', error);
-                //alert('Unable to retrieve your location');
-				citiesElement.innerHTML = `
-				<div class="city">
-					<div>
-						<h2>Unable to retrieve your location</h2>
-					</div>
-				</div>
-			`;
             });
-        } else {
-			citiesElement.innerHTML = `
-			<div class="city">
-				<div>
-					<h2>Geolocation is not supported by this browser</h2>
-				</div>
-			</div>
-		`;
         }
     } else {
         let cityName = cityTimeZone.replace("_", " ").split("/")[1];
-        let cityTime = moment().tz(cityTimeZone);
         let citiesElement = document.querySelector("#cities");
         citiesElement.innerHTML = `
-            <div class="city">
-                <div>
+            <div class="city row justify-content-evenly">
+                <div class="col-4">
                     <h2>${cityName}</h2>
-                    <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+                    <div class="date"></div>
                 </div>
-                <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small></div>
+                <div class="time col-4"></div>
+                <button onclick="refreshPage()">Refresh</button>
             </div>
         `;
+        updateCityInterval = setInterval(() => {
+            let cityTime = moment().tz(cityTimeZone);
+            let dateElement = citiesElement.querySelector(".date");
+            let timeElement = citiesElement.querySelector(".time");
+
+            dateElement.innerHTML = cityTime.format("MMMM Do YYYY");
+            timeElement.innerHTML = cityTime.format("h:mm:ss A");
+        }, 1000);
     }
+}
+
+
+function refreshPage() {
+    location.reload();
+	//set the selector to the first option
+	document.getElementById("city").selectedIndex = 0;
 }
 
 updateTime();
