@@ -1,5 +1,6 @@
 //Using moment to get the current time and date
 //let getTimezone = moment.tz.guess();
+const UNSPLASH_ACCESS_KEY =  'hxZKIo_wnzrFpB8vKAiKFC-2LoMB2cZBv9PWpGrpDiA';
 document.getElementById("city").selectedIndex = 0;
 
 function updateTime() {
@@ -48,6 +49,7 @@ function updateCity(event) {
                         let city = data.address.city || data.address.town || data.address.village || "Location";
                         cityTimeZone = moment.tz.guess();
                         let citiesElement = document.querySelector("#cities");
+
                         citiesElement.innerHTML = `
                             <div class="city row justify-content-evenly">
                                 <div class="col-4">
@@ -67,6 +69,24 @@ function updateCity(event) {
                             dateElement.innerHTML = cityTime.format("MMMM Do YYYY");
                             timeElement.innerHTML = cityTime.format("h:mm:ss [<small>]A[</small>]");
                         }, 1000);
+
+						// Fetch a picture of the city from Unsplash API
+                        fetch(`https://api.unsplash.com/photos/random?query=${city}&client_id=${UNSPLASH_ACCESS_KEY}`)
+                            .then(response => response.json())
+                            .then(photoData => {
+                                //let cityImage = document.createElement("img");
+                                //cityImage.src = photoData.urls.regular;
+                                //cityImage.alt = `${city}`;
+								//set the image to the background of the container
+								let container = document.querySelector(".container");
+								container.style.backgroundImage = `url(${photoData.urls.regular})`;
+								container.style.backgroundSize = "cover";
+								container.style.backgroundPosition = "center";
+								container.style.backgroundRepeat = "no-repeat";
+								container.style.opacity = "0.9";
+
+							})
+						.catch(error => console.error('Error fetching city image:', error));
                     })
                     .catch(error => console.error('Error fetching city name:', error));
             }, (error) => {
@@ -121,6 +141,7 @@ function changeBackroundColor() {
 		document.body.style.backgroundSize = "400% 400%";
 	}
 }
+
 
 updateTime();
 setInterval(updateTime, 1000);
