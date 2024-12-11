@@ -2,6 +2,8 @@
 //let getTimezone = moment.tz.guess();
 const UNSPLASH_ACCESS_KEY =  'hxZKIo_wnzrFpB8vKAiKFC-2LoMB2cZBv9PWpGrpDiA';
 document.getElementById("city").selectedIndex = 0;
+let container = document.querySelector(".container");
+container.style.backgroundImage = "none";
 
 function updateTime() {
     // Los Angeles
@@ -105,6 +107,8 @@ function updateCity(event) {
             <button onclick="refreshPage()" class="mt-4 mb-1">Refresh</button>
 
         `;
+		let container = document.querySelector(".container");
+		container.style.backgroundImage = "none";
         updateCityInterval = setInterval(() => {
             let cityTime = moment().tz(cityTimeZone);
             let dateElement = citiesElement.querySelector(".date");
