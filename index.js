@@ -33,6 +33,7 @@ function updateCity(event) {
     clearInterval(updateCityInterval); // Clear the previous interval
 	if (cityTimeZone === "") {
 		console.log("Please select a city");
+		refreshPage();
 	}
     else if (cityTimeZone === "current") {
         if (navigator.geolocation) {
@@ -64,7 +65,7 @@ function updateCity(event) {
                             let timeElement = citiesElement.querySelector(".time");
 
                             dateElement.innerHTML = cityTime.format("MMMM Do YYYY");
-                            timeElement.innerHTML = cityTime.format("h:mm:ss A");
+                            timeElement.innerHTML = cityTime.format("h:mm:ss [<small>]A[</small>]");
                         }, 1000);
                     })
                     .catch(error => console.error('Error fetching city name:', error));
@@ -92,7 +93,7 @@ function updateCity(event) {
             let timeElement = citiesElement.querySelector(".time");
 
             dateElement.innerHTML = cityTime.format("MMMM Do YYYY");
-            timeElement.innerHTML = cityTime.format("h:mm:ss A");
+            timeElement.innerHTML = cityTime.format("h:mm:ss [<small>]A[</small>]");
         }, 1000);
     }
 }
@@ -104,8 +105,26 @@ function refreshPage() {
 	document.getElementById("city").selectedIndex = 0;
 }
 
+function changeBackroundColor() {
+	//if current location is after 18:00 background color will be dark otherwise background: linear-gradient(45deg, #f1bcff, #a9eee9, #ecffa4, #ffdca6, #f2aeae);
+	let currentTime = moment().tz(moment.tz.guess());
+	let hours = currentTime.hours();
+
+	if (hours >= 19 || hours < 6) {
+		document.body.style.background = "linear-gradient(45deg, #b03cd0, #28918a, #f0c61d, #f58a17, #f2aeae)";
+		document.body.style.color = "white";
+		document.body.style.backgroundSize = "400% 400%";
+	}
+	else {
+		document.body.style.background = "linear-gradient(45deg, #f1bcff, #a9eee9, #ecffa4, #ffdca6, #f2aeae)";
+		document.body.style.color = "black";
+		document.body.style.backgroundSize = "400% 400%";
+	}
+}
+
 updateTime();
 setInterval(updateTime, 1000);
 
 let citiesSelectElement = document.querySelector("#city");
 citiesSelectElement.addEventListener("change", updateCity);
+changeBackroundColor();

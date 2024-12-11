@@ -1,8 +1,28 @@
 body
 {
-	background-color: #f0f0f0;
+	/* background gradient moving color */
+	background: linear-gradient(45deg, #f1bcff, #a9eee9, #ecffa4, #ffdca6, #f2aeae);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
 	text-align: center;
 	margin-top: 5%;
+	font-family: "Playwrite DE Grund", serif;
+}
+
+@keyframes gradient
+{
+	0%
+	{
+		background-position: 0% 50%;
+	}
+	50%
+	{
+		background-position: 100% 50%;
+	}
+	100%
+	{
+		background-position: 0% 50%;
+	}
 }
 
 h1
@@ -10,17 +30,28 @@ h1
 	font-family: "Agu Display", serif;
 	text-align: center;
 	font-size: 50px;
-	color: #000000;
 	margin-top: 1rem;
 }
 
 .container
 {
+	background: #8e91ea21 ;
 	border: 2px solid #c539a7;
 	border-radius: 10px;
 	margin: 3rem auto;
+	box-shadow: 0 0 10px 0 #c539a7;
 	/*padding: 0 1rem auto;*/
 	padding-bottom: 1rem;
+}
+
+select
+{
+	width: 50%;
+	padding: 10px;
+	margin: 10px 0;
+	border-radius: 5px;
+	background-color: #c539a7;
+	color: white;
 }
 
 button
@@ -34,4 +65,15 @@ button
 	text-decoration: none;
 	font-size: 16px;
 	cursor: pointer;
+}
+
+.date
+{
+	font-size: 14px;
+}
+
+.time
+{
+	font-size: 20px;
+	font-weight: bold;
 }
