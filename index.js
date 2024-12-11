@@ -54,8 +54,9 @@ function updateCity(event) {
                                     <div class="date"></div>
                                 </div>
                                 <div class="time col-4"> </div>
-							<button onclick="refreshPage()">Refresh</button>
                             </div>
+							<button onclick="refreshPage()" class="mt-4 mb-1" >Refresh</button>
+
                         `;
                         updateCityInterval = setInterval(() => {
                             let cityTime = moment().tz(cityTimeZone);
@@ -81,8 +82,9 @@ function updateCity(event) {
                     <div class="date"></div>
                 </div>
                 <div class="time col-4"></div>
-                <button onclick="refreshPage()">Refresh</button>
             </div>
+            <button onclick="refreshPage()" class="mt-4 mb-1">Refresh</button>
+
         `;
         updateCityInterval = setInterval(() => {
             let cityTime = moment().tz(cityTimeZone);
