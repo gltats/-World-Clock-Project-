@@ -90,7 +90,7 @@ function updateCity(event) {
                     })
                     .catch(error => console.error('Error fetching city name:', error));
             }, (error) => {
-                console.error('Error getting location:', error);
+				handleGeolocationError(error);
             });
         }
     } else {
@@ -130,6 +130,19 @@ function updateCity(event) {
             timeElement.innerHTML = cityTime.format("h:mm:ss [<small>]A[</small>]");
         }, 1000);
     }
+}
+
+function handleGeolocationError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("Geolocation request denied. Please allow location access.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+    }
+    console.error('Error getting location:', error);
+    refreshPage();
 }
 
 
