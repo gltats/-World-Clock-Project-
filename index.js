@@ -111,7 +111,7 @@ function changeBackroundColor() {
 	let hours = currentTime.hours();
 
 	if (hours >= 19 || hours < 6) {
-		document.body.style.background = "linear-gradient(45deg, #b03cd0, #28918a, #f0c61d, #f58a17, #f2aeae)";
+		document.body.style.background = "linear-gradient(45deg, #b03cd0, #28918a, #5145d3)";
 		document.body.style.color = "white";
 		document.body.style.backgroundSize = "400% 400%";
 	}
